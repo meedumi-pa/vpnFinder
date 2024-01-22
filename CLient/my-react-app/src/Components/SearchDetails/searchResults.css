@@ -1,0 +1,105 @@
+.Search_results{
+  
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--font-family);
+   padding:0px;
+   margin:0;
+   
+   }
+   .result_form{
+    
+      padding:0 ;
+      border:1px solid rgb(6, 49, 2);
+      border-radius: 10px;
+      color:#000; 
+      max-width: 650px;
+      width:100%;
+      background:#5cbd73be;
+      align-items: center;
+      display: flex;
+      justify-content: space-around;
+      margin-left: 20rem;
+      margin-top: 0;
+      box-shadow:inset -5px -5px -5px -5px rgb(0, 0, 0, 0.5);
+     
+    }
+    
+    .heading_text {
+      text-align: left;
+      margin-bottom: 20px;
+      color:var(--color-bg);
+      margin-top: 0;
+    }
+    .form-details{
+      display: flex;
+      flex-direction: column;
+      margin:0;
+    }
+    .form_field {
+      display: flex;
+      flex:1;
+      flex-direction: column;
+      margin-right: 10px;
+  
+    }
+    .form-input {
+      margin: 2px 0;
+    width:250px;
+    padding: 4px 5px;
+    box-shadow:inset -5px -5px -5px -5px rgb(0, 0, 0, 0.5);
+    border-color: #fff;
+    background-color:#ffffffd1;
+    color:#000;
+   border-radius: 4px;
+   font-size: small;
+   font-family: var(--font-family);
+   
+    
+    }
+    .form-input-large {
+      margin: 2px;
+      width: 250px;
+      height: auto; /* Set to auto to allow dynamic height based on content */
+      padding: 0 8px;
+      border-color: #fff;
+      border: none;
+      box-shadow:inset -5px -5px -5px -5px rgb(0, 0, 0, 0.5);
+      background-color:#ffffffd1;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      white-space: pre-wrap;
+      resize: none; /* Optional: Disable user resizing */
+      border-radius: 4px;
+      font-size: small;
+      font-family: var(--font-family);
+    }
+   
+    .form-input-large:focus{
+      outline:none;
+      
+    }
+    .formRow {
+      margin-bottom: 0;
+      display:flex;
+    }
+     label {
+      font-weight: bolder;
+      font-size: 12px;
+      padding: 0 5px;
+      color:#000;
+      text-align: left;
+    }
+    .form-input:focus{
+      outline: none;
+    }
+    .close-icon {
+      position: absolute;
+      top: 150px;
+      right: 300px;
+      cursor: pointer;
+      font-size: 24px; /* Adjust the font size as needed */
+      color: #fff; /* Change the color as needed */
+    }
+    
