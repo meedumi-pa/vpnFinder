@@ -1,0 +1,151 @@
+.pdf-container {
+    margin-left: 40px;
+    margin-top:20px;
+    padding: 20px;
+    width:500px;
+    height:500px;
+    border: 1px solid #ccc;
+    background: #f4f1f1;
+    border-radius: 5px;
+  }
+  
+  legend {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  
+ .pdf-container input[type='text'] {
+    width: 100%; 
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding:4px;
+  } 
+  .pdf-container input[type='text']:focus{
+    outline:none;
+  }
+  
+  .suggestion_container {
+  
+        position: absolute;
+        width: 100%;
+        max-width: 450px;
+        max-height: 200px; /* Set the maximum height for the dropdown */
+       overflow-y: auto; 
+        border: 1px solid rgb(220, 214, 214);
+        border-radius: 0 0 10px 10px;
+        border-top: 0;
+        background-color:darkgrey;
+        z-index: 1;
+        margin-left: 8px;
+        margin-top: -10px; 
+       
+  }
+  .suggestion_container2 {
+    display:flex;
+    flex-direction: column;
+    position: absolute;
+    width: 100%;
+    max-width: 450px;
+   max-height: 150px; /* Set the maximum height for the dropdown */
+   overflow-y: auto; 
+    border: 1px solid rgb(220, 214, 214);
+    border-top: 0;
+    background-color:rgba(206, 201, 201, 0.668); 
+    margin-left: 6px;
+    margin-top: 70px; 
+}
+.suggestion_container2:hover{
+  background-color: #ccc;
+}
+  .suggestion_container :hover{
+    background-color:#ccc;
+  }
+  
+  .pdf-container .row {
+    display: flex;
+    align-items: center; /* Vertically center the items */
+    margin-bottom: 5px; /* Add some spacing between rows */
+  }
+  
+  .pdf-container .row label {
+    flex: 0 0 auto; 
+  
+    margin-right: 5px; /* Add some spacing between label and input */
+  }
+  
+  .pdf-container.row input[type='text'] {
+    flex: 1; 
+  
+  }
+  .btngroup{
+    margin-top: 180px;
+    margin-left: 270px;
+  }
+  .btn {
+    margin-right: 5px;
+    padding: 5px 20px;
+    background-color: #00ff9d;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .btn:hover {
+    background-color: #00ff80;
+  }
+  .close-iconpdf {
+    position: absolute;
+    top: 150px;
+    left: 500px;
+    cursor: pointer;
+    font-size: 20px;
+    color: rgba(255, 0, 0, 0.774); 
+  }
+  .pdfResults {
+    margin-left: 600px;
+    margin-top:-520px;
+    padding: 20px;
+    width:500px;
+    height:500px;
+    border: 1px solid #ccc;
+    background: #fff;
+    border-radius: 5px;
+  }
+  .pdfResults .detailItem{
+    display: flex;
+    flex-direction: row;
+    padding:2px;
+  }
+  .pdfResults .detailItem span{
+    
+    font-weight: 500;
+  }
+  .pdfResults label{
+    margin-left:20px;
+    width:200px;
+    font-weight: 400;
+  }
+  .pdfResults  .baddress{
+    word-wrap:wrap;
+    margin-left: 75px;
+  }
+  .pdfResults button{
+    margin-left: 280px;
+    padding: 5px 20px;
+    background-color: #00ff9d;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .close-icon-pdf {
+    position: absolute;
+    top: 150px;
+    right: 280px;
+    cursor: pointer;
+    font-size: 20px;
+    color: rgba(255, 0, 0, 0.774); 
+  }
