@@ -1,0 +1,91 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  max-height: 700px;
+}
+.csv-container {
+  margin-top: 20px;
+  margin-left: 450px;
+
+  margin-bottom: 20px;
+
+  width: 500px;
+  height: 500px;
+  padding: 20px;
+
+  border-radius: 4px;
+  box-shadow: 0 0 5px rgba(49, 49, 147, 0.8);
+}
+legend {
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 20px;
+  /* background-color: #ddd; */
+  box-shadow: 0 2px 4px var(rgba(255, 255, 255, 0.5));
+  color: #06327a;
+}
+
+.csv-container .row {
+  display: flex;
+  flex-direction: row;
+
+  /* padding: 15px; */
+}
+.csv-container select {
+  margin-top: 20px;
+  font-size: 13px;
+  background-color: #eee6e6;
+
+  padding: 4px;
+  width: 300px;
+}
+
+.csv-container label {
+  margin-top: 20px;
+  width: 150px;
+  font-size: 15px;
+}
+
+.csv-container .csvbtn {
+  font-size: small;
+  background-color: #04d8f9;
+  border: none;
+  border-radius: 8px;
+  width: 70px;
+  padding: 8px;
+  color: #06327a;
+  font-weight: bold;
+
+  margin: 5px;
+}
+.csv-container .formRow-btn {
+  position: absolute;
+  top: 85%;
+  left: 12%;
+}
+
+.csv-container select:focus {
+  outline: none;
+  border: none;
+  box-shadow: 0 0 5px rgba(131, 131, 243, 0.8);
+}
+
+.csvlink {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-top: 50px;
+  text-decoration: none;
+  color: #fff;
+  background-color: #007bff;
+  border: 1px solid #007bff;
+  border-radius: 5px;
+  padding: 10px 20px;
+}
+
+.csvlink:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}

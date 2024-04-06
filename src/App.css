@@ -5,12 +5,12 @@ body{
   background-image: url('D:\VpnFinder\CLient\my-react-app\src\assets\back_pic.jpg');
   background-repeat:no-repeat;
   background-size: cover;
-  display: flex;
-  /* justify-content: center;
-  align-items: center; */
+  display: flex; 
+  justify-content: center;
+  align-items: center;
   background-position: center center;
-   height:  100vh; 
-   /* width:100vw; */ 
+  
+   
   
 }
 
@@ -156,6 +156,7 @@ p{
   height:100px;
   background:#ffffff71;
   
+  
 }
 footer {
   /* background-color: #3333337a; */
@@ -180,4 +181,9 @@ footer p a {
 
 footer p a:hover {
   color: #ffcc00; /* Change color on hover */
+}
+.error::after{
+  input{
+  border: red 1px;
+  }
 }
