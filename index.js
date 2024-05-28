@@ -1,8 +1,12 @@
 const express = require("express");
+const session = require("express-session");
+const cookieParser = require("cookie-parser");
 const app = express();
 const mysql = require("mysql2");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const passport = require("passport");
+const bcrypt = require("bcryptjs");
 
 const pool = mysql.createPool({
   host: "localhost",
@@ -21,6 +25,175 @@ pool.getConnection((err, conn) => {
 });
 app.use(bodyParser.json());
 app.use(cors());
+app.use(cookieParser());
+app.use(
+  session({
+    secret: "secret",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      secure: false,
+      maxAge: 1000 * 60 * 60 * 24,
+    },
+  })
+);
+app.get("/", (req, res) => {
+  if (req.session.role) {
+    // User is authenticated
+    return res.json({ valid: true, role: req.session.role });
+  } else {
+    // User is not authenticated
+    return res.json({ valid: false });
+  }
+});
+
+app.post("/signup", async (req, res) => {
+  try {
+    const { usergroup, username, email, password, confirmPassword } = req.body;
+
+    if (password !== confirmPassword) {
+      return res.status(400).json({ error: "Passwords do not match" });
+    }
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    await pool.execute(
+      `INSERT INTO users (username, password, email, role) VALUES (?, ?, ?, ?)`,
+      [username, hashedPassword, email, usergroup]
+    );
+    console.log("success", res);
+    res.json({ message: "Registration successful" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post("/login", (req, res) => {
+  const { email, password } = req.body;
+  pool.query(
+    "SELECT * FROM users WHERE email = ?",
+    [email],
+    async (err, results) => {
+      if (err) throw err;
+      if (
+        results.length === 0 ||
+        !(await bcrypt.compare(password, results[0].password))
+      ) {
+        res.status(401).send("Invalid email or password");
+      } else {
+        req.session.user = {
+          id: results[0].id,
+          email: results[0].email,
+          role: results[0].role, // Assuming 'role' is a column in the 'users' table
+        };
+        res.send({ role: results[0].role });
+        //res.send("Login successful");
+      }
+    }
+  );
+});
+const checkUserRole = (role) => {
+  return (req, res, next) => {
+    if (
+      req.session.user &&
+      req.session.user.role === role &&
+      (role === "user" ||
+        (role === "admin" &&
+          (req.path === "/search" || req.path === "/reports")))
+    ) {
+      next();
+    } else {
+      res.status(403).send("Unauthorized");
+    }
+  };
+};
+
+// User routes
+app.get("/user", checkUserRole("user"), (req, res) => {
+  res.send("User Page");
+});
+
+// Admin routes
+app.get("/admin", checkUserRole("admin"), (req, res) => {
+  res.send("Admin Page");
+});
+
+// Search page accessible to both users and admins
+app.get("/search-user", checkUserRole("user"), (req, res) => {
+  res.send("Search Page");
+});
+
+// Reports page accessible to both users and admins
+app.get("/reports", checkUserRole("user"), (req, res) => {
+  res.send("Reports Page");
+});
+
+// VPN page accessible only to admins
+app.get("/addvpn", checkUserRole("admin"), (req, res) => {
+  res.send("VPN Page");
+});
+// app.post("/login", (req, res) => {
+//   const { email, password } = req.body;
+//   pool.query(
+//     `SELECT * FROM users WHERE email = ?`,
+//     [email],
+//     (error, results, fields) => {
+//       if (error) {
+//         console.error("Error querying database:", error.message);
+//         return res.status(500).json({ message: "Internal server error" });
+//       }
+//       if (results.length === 0) {
+//         return res.status(401).json({ message: "Invalid email or password" });
+//       }
+
+//       const user = results[0];
+//       // Compare hashed password with provided password using bcrypt
+//       bcrypt.compare(password, user.password, (err, result) => {
+//         if (err) {
+//           console.error("Error comparing passwords:", err.message);
+//           return res.status(500).json({ message: "Internal server error" });
+//         }
+//         if (!result) {
+//           return res.status(401).json({ message: "Invalid email or password" });
+//         }
+//         if (results.length > 0) {
+//           req.session.role = user.role;
+
+//           return res.json({ Login: true });
+//         } else {
+//           return res.json({ Login: false });
+//         }
+//       });
+//     }
+//   );
+// });
+
+app.get("/logout", (req, res) => {
+  return res.json({ Status: "success" });
+});
+
+app.put("/pwd", (req, res) => {
+  const { email, password } = req.body;
+
+  // Generate salt and hash the password
+  bcrypt.hash(password, 10, (err, hashedPassword) => {
+    if (err) {
+      console.error("Error hashing password:", err);
+      res.status(500).json({ error: "Internal Server Error" });
+      return;
+    }
+
+    const query = `UPDATE users SET password = ? WHERE email = ?`;
+    pool.query(query, [hashedPassword, email], (err, results, fields) => {
+      if (err) {
+        console.error("Error executing MySQL Query:", err);
+        res.status(500).json({ error: "Internal Server Error" });
+      } else {
+        res.json({ message: "Data updated successfully!" });
+        console.log("Successful", results);
+      }
+    });
+  });
+});
 
 app.post("/search", (req, res) => {
   const { name } = req.body;
@@ -84,23 +257,6 @@ app.get("/suggestions", (req, res) => {
   });
 });
 
-// app.get("/status", (req, res) => {
-//   const { term } = req.query;
-//   const searchStatus = `%${term}%`;
-//   const query = "SELECT * FROM vpninfo Where status LIKE ?";
-
-//   pool.query(query, [searchStatus, searchStatus], (err, results) => {
-//     if (err) {
-//       console.error("Error executing MySQL query:", err);
-//       res.status(500).json({ error: "Internal Server Error" });
-//     } else {
-//       const branchNames = results.map((result) => result.Region);
-//       const uniqueBranchNames = [...new Set(branchNames)]; // Use Set to remove duplicates
-//       res.json(uniqueBranchNames);
-//       console.log(uniqueBranchNames);
-//     }
-//   });
-// });
 app.post("/insert", (req, res) => {
   const {
     BranchCode,
@@ -343,7 +499,6 @@ app.get("/reports", (req, res) => {
   try {
     let query;
 
-    // Perform database query based on selected option
     switch (term1) {
       case "alldetails":
         query = `
@@ -412,7 +567,6 @@ app.get("/reports", (req, res) => {
         return res.status(400).send("Invalid option");
     }
 
-    // Log the constructed query and the term value for debugging
     console.log("Executing query:", query);
     console.log("Term:", term1, term2);
 
