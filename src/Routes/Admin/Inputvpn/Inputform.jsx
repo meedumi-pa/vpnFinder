@@ -4,7 +4,7 @@ import "./inputvpn.css";
 import Button from "react-bootstrap/Button";
 import { FaTimes } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Toast from "../../Components/Toast/Toast";
+import Toast from "../../../Components/Toast/Toast";
 
 const Inputform = () => {
   const [showForm, setShowForm] = useState(true);
@@ -581,7 +581,7 @@ const Inputform = () => {
                   checked={checkedvalue === "warehouse"}
                   onChange={handleCheckboxChange}
                 />
-                <label htmlFor="warehouse">Ware House</label>
+                <label htmlFor="warehouse">WareHouse</label>
                 <input
                   type="radio"
                   id="branch"
@@ -668,11 +668,16 @@ const Inputform = () => {
                   ></input>
                 </div>
               </div>
-              {errors.openDate && (
-                <div className="error" style={{ marginLeft: "480px" }}>
-                  {errors.openDate}
+              <div className="formRow">
+                <div className="formColumn"></div>
+                <div className="formColumn">
+                  {errors.openDate && (
+                    <div className="error" style={{ marginLeft: "120px" }}>
+                      {errors.openDate}
+                    </div>
+                  )}
                 </div>
-              )}
+              </div>
               <div className="formRow">
                 <div className="formColumn">
                   <label>Branch Code</label>
@@ -723,11 +728,16 @@ const Inputform = () => {
                   />
                 </div>
               </div>
-              {errors.TelephoneNumber && (
-                <div className="error" style={{ marginLeft: "480px" }}>
-                  {errors.TelephoneNumber}
+              <div className="formRow">
+                <div className="formColumn"></div>
+                <div className="formColumn">
+                  {errors.TelephoneNumber && (
+                    <div className="error" style={{ marginLeft: "120px" }}>
+                      {errors.TelephoneNumber}
+                    </div>
+                  )}
                 </div>
-              )}
+              </div>
               <div className="formRow">
                 <div className="formColumn">
                   <label>Email</label>
@@ -1124,7 +1134,7 @@ const Inputform = () => {
             <div className="details">
               <div className="formRow">
                 <div className="formColumn">
-                  <label>Area Manager Name</label>
+                  <label style={{ width: "200px" }}>Area Manager Name</label>
                   <input
                     type="text"
                     name="AreaManagerName"
@@ -1138,13 +1148,12 @@ const Inputform = () => {
               </div>
               <div className="formRow">
                 <div className="formColumn">
-                  <label>EPF Number</label>
+                  <label style={{ width: "280px" }}>EPF Number</label>
                   <input
                     type="text"
                     name="Epf_AM"
                     value={EPFno_Am}
                     placeholder="EPF No"
-                    style={{ marginLeft: "40px" }}
                     onChange={(e) => {
                       setEPFno_Am(e.target.value);
                     }}
@@ -1168,7 +1177,7 @@ const Inputform = () => {
               )}
               <div className="formRow">
                 <div className="formColumn">
-                  <label>Branch Manager Name</label>
+                  <label style={{ width: "200px" }}>Branch Manager Name</label>
                   <input
                     type="text"
                     name="BranchManagerName"
@@ -1182,13 +1191,12 @@ const Inputform = () => {
               </div>
               <div className="formRow">
                 <div className="formColumn">
-                  <label>EPF Number</label>
+                  <label style={{ width: "280px" }}>EPF Number</label>
                   <input
                     type="text"
                     name="Epfno_sm"
                     value={EPFno_Sm}
                     placeholder="EPF No"
-                    style={{ marginLeft: "40px" }}
                     onChange={(e) => {
                       setEPFno_Sm(e.target.value);
                     }}
@@ -1199,7 +1207,6 @@ const Inputform = () => {
                   <input
                     type="text"
                     name="ContactNo_Sm"
-                    className="error-msg"
                     value={ContactNo_Sm}
                     placeholder="Contact Number"
                     onChange={handleChange}

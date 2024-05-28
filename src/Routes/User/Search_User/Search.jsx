@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
-import "./searchbar.css";
+import React, { useState } from "react";
+import "./search.css";
 import axios from "axios";
 import { FaSearch } from "react-icons/fa";
 import { BsChevronCompactDown } from "react-icons/bs";
 import "react-toastify/dist/ReactToastify.css";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Toast from "../Toast/Toast";
+import Toast from "../../../Components/Toast/Toast";
 
-const Searchbar = () => {
+const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [editMode, setEditMode] = useState(false);
@@ -339,6 +339,7 @@ const Searchbar = () => {
   };
   return (
     <div className="searchContainer">
+      {/* {!loggedIn && <LoginForm setLoggedIn={setLoggedIn} />} */}
       <div className="Branch_search">
         <FaSearch id="search-icon" size={15} />
         <input
@@ -1026,17 +1027,17 @@ const Searchbar = () => {
             </>
           )}
         </fieldset>
-        <div style={{ position: "relative" }}>
-          {editMode ? (
-            <Button type="button" variant="success" onClick={handleSaveChanges}>
-              Save Changes
-            </Button>
-          ) : (
-            <Button type="button" variant="info" onClick={handleToggleEditMode}>
-              Edit VPN
-            </Button>
-          )}
-        </div>
+        {/* <div style={{ position: "relative" }}>
+            {editMode ? (
+              <Button type="button" variant="success" onClick={handleSaveChanges}>
+                Save Changes
+              </Button>
+            ) : (
+              <Button type="button" variant="info" onClick={handleToggleEditMode}>
+                Edit VPN
+              </Button>
+            )}
+          </div> */}
         {showToast && (
           <Toast
             message={toastMessage}
@@ -1049,4 +1050,4 @@ const Searchbar = () => {
   );
 };
 
-export default Searchbar;
+export default Search;
