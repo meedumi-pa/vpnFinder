@@ -1,3 +1,7 @@
+.addvpn {
+  overflow-y: auto; /* Add overflow-y: auto here */
+  max-height: 600px;
+}
 .formContainer {
   display: flex;
   flex-direction: column;
@@ -171,4 +175,5 @@ legend {
   font-size: 11px !important;
   color: red !important;
   background: transparent !important;
+  margin-top: -10px !important;
 }

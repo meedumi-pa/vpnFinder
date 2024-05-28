@@ -167,6 +167,7 @@ fieldset {
   color: red !important;
   background: transparent !important;
   margin-left: 100px;
+  margin-top: -10px !important;
 }
 .toggleS_branch {
   position: relative;
