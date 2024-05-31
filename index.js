@@ -198,9 +198,10 @@ app.put("/pwd", (req, res) => {
 app.post("/search", (req, res) => {
   const { name } = req.body;
   const query = `SELECT * FROM branchdetails b
-  JOIN managerinfo_ m ON b.Branch_Code = m.Branch_Code_M
-  JOIN networkdetails n ON b.Branch_Code = n.Branch_Code_N
-  JOIN posdetails p ON b.Branch_Code = p.Branch_Code_P
+  LEFT JOIN managerinfo_ m ON b.Branch_Code = m.Branch_Code_M
+  LEFT JOIN networkdetails n ON b.Branch_Code = n.Branch_Code_N
+  LEFT JOIN posdetails p ON b.Branch_Code = p.Branch_Code_P
+  LEFT JOIN scaleinfo s ON b.Branch_Code = s.Branch_Code_S
   WHERE b.Branch_Code = ? OR b.Branch_Name = ?
   `;
 
@@ -285,6 +286,12 @@ app.post("/insert", (req, res) => {
     POS06,
     LQ_POS01,
     LQ_POS02,
+    Scale01,
+    Scale02,
+    Scale03,
+    Scale04,
+    Scale05,
+    Scale06,
     Region,
     AreaManagerName,
     Epf_AM,
@@ -405,6 +412,35 @@ app.post("/insert", (req, res) => {
                       });
                     }
 
+                    //Insert data into Scaleinfo table
+                    conn.query(
+                      `INSERT INTO Scaleinfo (
+                      Branch_Code_S,
+                      Scale01,
+                      Scale02,
+                      Scale03,
+                      Scale04,
+                      Scale05,
+                      Scale06
+                    ) VALUES (?,?,?,?,?,?,?)`,
+                      [
+                        BranchCode,
+                        Scale01,
+                        Scale02,
+                        Scale03,
+                        Scale04,
+                        Scale05,
+                        Scale06,
+                      ],
+                      (err, result) => {
+                        if (err) {
+                          conn.rollback(() => {
+                            throw err;
+                          });
+                        }
+                      }
+                    );
+
                     // Insert data into Managerinfo table
                     conn.query(
                       `INSERT INTO Managerinfo_ (
@@ -478,6 +514,7 @@ app.put("/update", (req, res) => {
     JOIN managerinfo_ m ON b.Branch_Code = m.Branch_Code_M
     JOIN networkdetails n ON b.Branch_Code = n.Branch_Code_N
     JOIN posdetails p ON b.Branch_Code = p.Branch_Code_P 
+    JOIN scaleinfo s ON b.Branch_Code = s.Branch_Code_S
     SET ${updateColumns}
     WHERE b.Branch_Code = '${Branch_Code}'`;
 
